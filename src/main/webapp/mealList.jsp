@@ -14,32 +14,44 @@
 </head>
 <body>
 
-    <table border="1">
-        <tr>
-            <th>Описание</th>
-            <th>Время</th>
-            <th>Калории</th>
-            <th>Превышение</th>
-        </tr>
-        <c:forEach var="meal" items="${mealList}">
-            <c:if test="${meal.isExceed()}" >
+<table border="1">
+    <tr>
+        <th>Описание</th>
+        <th>Время</th>
+        <th>Калории</th>
+        <th>Превышение</th>
+    </tr>
+    <c:forEach var="meal" items="${mealList}">
+        <c:choose>
+            <c:when test="${meal.isExceed()}">
                 <c:set value="#FF0000" var="red"/>
-            </c:if>
-            <tr style="color:${red}">
-                <td>
-                    <c:out value="${meal.getDescription()}"/>
-                </td>
-                <td>
-                    <c:out value="${fn:replace(meal.getDateTime(), 'T', ' ')}"/>
-                </td>
-                <td>
-                    <c:out value="${meal.getCalories()}"/>
-                </td>
-                <td>
-                    <c:out value="${meal.isExceed()}"/>
-                </td>
-            </tr>
-        </c:forEach>
-    </table>
+            </c:when>
+            <c:otherwise>
+                <c:set value="#000000" var="red"/>
+            </c:otherwise>
+        </c:choose>
+        <tr style="color:${red}">
+            <td>
+                <c:out value="${meal.getDescription()}"/>
+            </td>
+            <td>
+                <c:out value="${fn:replace(meal.getDateTime(), 'T', ' ')}"/>
+            </td>
+            <td>
+                <c:out value="${meal.getCalories()}"/>
+            </td>
+            <td>
+                <c:out value="${meal.isExceed()}"/>
+            </td>
+            <td>
+                <a href="meals?action=edit&id=${meal.getId()}">Update</a>
+            </td>
+            <td>
+                <a href="meals?action=delete&id=${meal.getId()}">Delete</a>
+            </td>
+        </tr>
+    </c:forEach>
+</table>
+<p><a href="meals?action=insert">Add Meal</a></p>
 </body>
 </html>
