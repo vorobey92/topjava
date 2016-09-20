@@ -11,5 +11,14 @@
     <li><a href="users">User List</a></li>
     <li><a href="meals">Meal List</a></li>
 </ul>
+<h3>Select user:</h3>
+<form action="users" method="post">
+    <p><select size="2" multiple name="email">
+        <option disabled>Выберите user-a</option>
+        <option value="bobby@mail.ru">Ivan</option>
+        <option value="b@mail.ru">Drop</option>
+    </select></p>
+    <p><input type="submit" value="Выбрать"></p>
+</form>
 </body>
 </html>

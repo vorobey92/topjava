@@ -6,11 +6,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.repository.UserRepository;
-import ru.javawebinar.topjava.repository.mock.InMemoryMealRepositoryImpl;
-import ru.javawebinar.topjava.repository.MealRepository;
-import ru.javawebinar.topjava.repository.mock.InMemoryUserRepositoryImpl;
-import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.web.meal.MealRestController;
 
 import javax.servlet.ServletConfig;
@@ -19,7 +14,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Objects;
 
 /**
@@ -47,7 +44,7 @@ public class MealServlet extends HttpServlet {
                 LocalDateTime.parse(request.getParameter("dateTime")),
                 request.getParameter("description"),
                 Integer.valueOf(request.getParameter("calories")),
-                AuthorizedUser.id());
+                AuthorizedUser.getId());
 
         LOG.info(meal.isNew() ? "Create {}" : "Update {}", meal);
         controller.save(meal);
@@ -70,10 +67,19 @@ public class MealServlet extends HttpServlet {
 
         } else if ("create".equals(action) || "update".equals(action)) {
             final Meal meal = action.equals("create") ?
-                    new Meal(LocalDateTime.now().withNano(0).withSecond(0), "", 1000, AuthorizedUser.id()):
+                    new Meal(LocalDateTime.now().withNano(0).withSecond(0), "", 1000, AuthorizedUser.getId()):
                     controller.get(getId(request));
             request.setAttribute("meal", meal);
             request.getRequestDispatcher("mealEdit.jsp").forward(request, response);
+        } else if ("filter".equals(action)) {
+            LOG.info("get filtered");
+            request.setAttribute("mealList", controller.getBetween(
+                    request.getParameter("dateStart").equals("") ? null : LocalDate.parse(request.getParameter("dateStart")),
+                    request.getParameter("dateEnd").equals("") ? null :LocalDate.parse(request.getParameter("dateEnd")),
+                    request.getParameter("timeStart").equals("") ? null :LocalTime.parse(request.getParameter("timeStart")),
+                    request.getParameter("timeEnd").equals("") ? null :LocalTime.parse(request.getParameter("timeEnd")))
+            );
+            request.getRequestDispatcher("/mealList.jsp").forward(request, response);
         }
     }
 

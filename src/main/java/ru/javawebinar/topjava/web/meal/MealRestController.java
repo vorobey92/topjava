@@ -8,7 +8,6 @@ import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.to.MealWithExceed;
-import ru.javawebinar.topjava.util.MealsUtil;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -31,15 +30,15 @@ public class MealRestController {
     }
 
     public Meal get(int id) {
-        return service.get(id, AuthorizedUser.id());
+        return service.get(id, AuthorizedUser.getId());
     }
 
     public void delete(int id) {
-        service.delete(id, AuthorizedUser.id());
+        service.delete(id, AuthorizedUser.getId());
     }
 
     public List<MealWithExceed> getAll() {
-        return service.getAll(AuthorizedUser.id());
+        return service.getAll(AuthorizedUser.getId());
     }
 
     public List<MealWithExceed> getBetween(LocalDate dateStart, LocalDate dateEnd,
@@ -56,7 +55,7 @@ public class MealRestController {
         if (timeStart == null) {
             timeStart = LocalTime.MIN;
         }
-        return service.getBetweenDateTime(LocalDateTime.of(dateStart, timeStart), LocalDateTime.of(dateEnd, timeEnd), AuthorizedUser.id());
+        return service.getBetweenDateTime(LocalDateTime.of(dateStart, timeStart), LocalDateTime.of(dateEnd, timeEnd), AuthorizedUser.getId());
     }
 
 }

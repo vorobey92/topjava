@@ -20,6 +20,22 @@
     <h2><a href="index.html">Home</a></h2>
     <h3>Meal list</h3>
     <a href="meals?action=create">Add Meal</a>
+
+    <form method="get" action="meals">
+        <input type="hidden" name="action" value="filter">
+        <dl>
+            <dt>Date:</dt>
+            <dd><input type="date" name="dateStart"></dd>
+            <dd><input type="date" name="dateEnd"></dd>
+        </dl>
+        <dl>
+            <dt>Time:</dt>
+            <dd><input type="time" name="timeStart"></dd>
+            <dd><input type="time" name="timeEnd"></dd>
+        </dl>
+        <button type="submit">Filter</button>
+    </form>
+
     <hr>
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>
