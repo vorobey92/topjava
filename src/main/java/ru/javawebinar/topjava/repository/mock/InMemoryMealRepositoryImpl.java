@@ -24,10 +24,22 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
         MealsUtil.MEALS.forEach(this::save);
     }
 
-    @Override
-    public Meal save(Meal meal) {
+    //для генерации тест-данных
+    private Meal save(Meal meal) {
         if (meal.isNew()) {
             meal.setId(counter.incrementAndGet());
+        }
+        repository.put(meal.getId(), meal);
+        return meal;
+    }
+
+    @Override
+    public Meal save(Meal meal, int userId) {
+        if (meal.isNew()) {
+            meal.setId(counter.incrementAndGet());
+        }
+        if (meal.getUserId() != userId) {
+            return null;
         }
         repository.put(meal.getId(), meal);
         return meal;
