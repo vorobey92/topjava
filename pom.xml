@@ -21,6 +21,9 @@
         <!-- Logging -->
         <logback.version>1.1.7</logback.version>
         <slf4j.version>1.7.21</slf4j.version>
+
+        <!--    Tests  -->
+        <junit.version>4.12</junit.version>
     </properties>
 
     <build>
@@ -88,6 +91,20 @@
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
+
+        <!--Test-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+
     </dependencies>
 
     <profiles>
