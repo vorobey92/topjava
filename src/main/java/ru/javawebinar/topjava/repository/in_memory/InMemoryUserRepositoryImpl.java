@@ -1,4 +1,4 @@
-package ru.javawebinar.topjava.repository.mock;
+package ru.javawebinar.topjava.repository.in_memory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

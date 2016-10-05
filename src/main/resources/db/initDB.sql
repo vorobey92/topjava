@@ -15,18 +15,19 @@ CREATE TABLE users
   enabled    BOOL DEFAULT TRUE,
   calories_per_day INTEGER DEFAULT 2000 NOT NULL
 );
+CREATE UNIQUE INDEX users_unique_email_idx ON users (email);
 
 CREATE TABLE meals
 (
-  id          INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  dateTime    TIMESTAMP DEFAULT now(),
-  description VARCHAR NOT NULL,
-  calories    INTEGER NOT NULL,
-  user_id     INTEGER NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+id          INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+dateTime    TIMESTAMP DEFAULT now(),
+description VARCHAR NOT NULL,
+calories    INTEGER NOT NULL,
+user_id     INTEGER NOT NULL,
+FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 
-CREATE UNIQUE INDEX users_unique_email_idx ON users (email);
+CREATE INDEX  idx_user_id ON meals(user_id);
 
 CREATE TABLE user_roles
 (

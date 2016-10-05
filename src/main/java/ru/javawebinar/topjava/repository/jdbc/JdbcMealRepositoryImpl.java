@@ -55,9 +55,12 @@ public class JdbcMealRepositoryImpl implements MealRepository {
             Number num = mealsInsert.executeAndReturnKey(map);
             meal.setId(num.intValue());
         } else {
-            namedParameterJdbcTemplate.update(
+           int affectedRows = namedParameterJdbcTemplate.update(
                     "UPDATE meals SET dateTime=:dateTime, description=:description," +
                             "calories=:calories WHERE id=:id AND user_id=:userId ", map);
+            if (affectedRows == 0) {
+                return null;
+            }
         }
         return meal;
     }
