@@ -1,4 +1,4 @@
-package ru.javawebinar.topjava.repository.in_memory;
+package ru.javawebinar.topjava.repository.mock;
 
 import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.Meal;
